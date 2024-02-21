@@ -94,6 +94,14 @@
                     </div>
                   </div>
                 </div>
+                <!-- パスワード不一致エラー -->
+                <div class="form-group">
+                  <div th:if="${errorMessage}" class="alert alert-danger">
+                    <p th:text="#{conpasswordErrorMessage}">
+                      パスワードが一致しません
+                    </p>
+                  </div>
+                </div>
                 <!-- パスワード -->
                 <div class="form-group">
                   <div class="row">
@@ -110,7 +118,26 @@
                         placeholder="password"
                         th:field="*{password}"
                         th:errorclass="error-input"
-                        value="xxxxxxxx"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <!-- 確認パスワード -->
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <label for="conpassword"> 確認用パスワード: </label>
+                      <label th:errors="*{conpassword}" class="error-messages">
+                        パスワードを入力してください
+                      </label>
+                      <input
+                        type="password"
+                        name="conpassword"
+                        id="conpassword"
+                        class="form-control"
+                        placeholder="conpassword"
+                        th:field="*{conpassword}"
+                        th:errorclass="error-input"
                       />
                     </div>
                   </div>
