@@ -26,35 +26,38 @@ public class InsertAdministratorForm {
 	@NotBlank(message = "#{NotBlank.password}")
 	@Size(min = 8, max = 16, message = "#{Size.password}")
 	private String password;
-
+	@NotBlank(message = "#{NotBlank.conpassword}")
+	private String conpassword;
+	
 	public String getName() {
 		return name;
 	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
 	public String getMailAddress() {
 		return mailAddress;
 	}
-
 	public void setMailAddress(String mailAddress) {
 		this.mailAddress = mailAddress;
 	}
-
 	public String getPassword() {
 		return password;
 	}
-
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public String getConpassword() {
+		return conpassword;
+	}
+	public void setConpassword(String conpassword) {
+		this.conpassword = conpassword;
 	}
 
 	@Override
 	public String toString() {
 		return "InsertAdministratorForm [name=" + name + ", mailAddress=" + mailAddress + ", password=" + password
-				+ "]";
+				+ ", conpassword=" + conpassword + "]";
 	}
 
 }

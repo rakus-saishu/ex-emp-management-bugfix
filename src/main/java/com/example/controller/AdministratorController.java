@@ -84,11 +84,19 @@ public class AdministratorController {
 		if (result.hasErrors()) {
 			return toInsert(form, model);
 		}
-		Administrator administrator = new Administrator();
-		// フォームからドメインにプロパティ値をコピー
-		BeanUtils.copyProperties(form, administrator);
-		administratorService.insert(administrator);
-		return "redirect:/";
+
+		if(form.getPassword().equals(form.getConpassword())){
+			Administrator administrator = new Administrator();
+			// フォームからドメインにプロパティ値をコピー
+			BeanUtils.copyProperties(form, administrator);
+			administratorService.insert(administrator);
+			return "redirect:/";
+		}else{
+			redirectAttributes.addFlashAttribute("errorMessage", "errorMessage");
+			return "redirect:/toInsert";
+		}
+		
+		
 	}
 
 	/////////////////////////////////////////////////////
