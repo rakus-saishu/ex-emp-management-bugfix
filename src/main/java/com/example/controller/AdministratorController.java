@@ -100,7 +100,7 @@ public class AdministratorController {
 	 * @return ログイン画面
 	 */
 	@GetMapping("/")
-	public String toLogin() {
+	public String toLogin(LoginForm form, Model model) {
 		return "administrator/login";
 	}
 
@@ -111,10 +111,22 @@ public class AdministratorController {
 	 * @return ログイン後の従業員一覧画面
 	 */
 	@PostMapping("/login")
-	public String login(LoginForm form, RedirectAttributes redirectAttributes) {
-		Administrator administrator = administratorService.login(form.getMailAddress(), form.getPassword());
+	public String login(
+		@Validated LoginForm form
+		, BindingResult result
+		, RedirectAttributes redirectAttributes
+		, Model model
+		) {
+
+		if (result.hasErrors()) {
+			return toLogin(form, model);
+		}
+
+		Administrator administrator
+			= administratorService.login(form.getMailAddress(), form.getPassword());
+
 		if (administrator == null) {
-			redirectAttributes.addFlashAttribute("errorMessage", "メールアドレスまたはパスワードが不正です。");
+			redirectAttributes.addFlashAttribute("errorMessage", "errorMessage");
 			return "redirect:/";
 		}
 		return "redirect:/employee/showList";

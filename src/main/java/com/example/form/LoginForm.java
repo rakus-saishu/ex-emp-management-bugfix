@@ -1,5 +1,7 @@
 package com.example.form;
 
+import jakarta.validation.constraints.NotBlank;
+
 /**
  * ログイン時に使用するフォーム.
  * 
@@ -9,8 +11,10 @@ package com.example.form;
 public class LoginForm {
 
 	/** メールアドレス */
+	@NotBlank(message = "#{NotBlank.loginMailAddress}")
 	private String mailAddress;
 	/** パスワード */
+	@NotBlank(message = "#{NotBlank.loginPassword}")
 	private String password;
 
 	public String getMailAddress() {
