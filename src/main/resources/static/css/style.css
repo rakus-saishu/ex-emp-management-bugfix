@@ -1,11 +1,12 @@
 @charset "UTF-8";
 
 .error-input {
-  border-color: #ff0000;
-  background-color: #ff0000;
+  /* border-color: #ff0000;
+  background-color: #ff0000; */
   margin-left: 5px;
 }
 
 .error-messages {
+  display: block;
   color: #ff0000;
 }

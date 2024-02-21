@@ -95,4 +95,29 @@ public class AdministratorRepository {
 		return administratorList.get(0);
 	}
 
+	 //メールアドレスの取得
+	 public String searchByMailAddress(String mailAddress) {
+ 
+		 String sql =
+			 """
+				 SELECT id, name, mail_address, password
+				 FROM administrators 
+				 WHERE mail_address = :mailAddress
+			 """;
+		 
+		 SqlParameterSource param
+			 = new MapSqlParameterSource()
+			 .addValue("mailAddress", mailAddress);
+		 
+		 String searchMailaddress
+			 = template.queryForObject(sql, param, ADMINISTRATOR_ROW_MAPPER).getMailAddress();
+ 
+		 if(searchMailaddress == null) {
+			 return null;
+		 }
+		 
+		 return searchMailaddress;
+ 
+	 }
+
 }
