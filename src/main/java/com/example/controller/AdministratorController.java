@@ -137,6 +137,8 @@ public class AdministratorController {
 			redirectAttributes.addFlashAttribute("errorMessage", "errorMessage");
 			return "redirect:/";
 		}
+		
+		session.setAttribute("administratorName", administrator.getName());
 		return "redirect:/employee/showList";
 	}
 
