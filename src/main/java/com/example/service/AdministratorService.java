@@ -1,6 +1,5 @@
 package com.example.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,8 +16,12 @@ import com.example.repository.AdministratorRepository;
 @Transactional
 public class AdministratorService {
 
-	@Autowired
 	private AdministratorRepository administratorRepository;
+
+    public AdministratorService(
+			AdministratorRepository administratorRepository) {
+        this.administratorRepository = administratorRepository;
+    }
 
 	/**
 	 * 管理者情報を登録します.
@@ -36,8 +39,8 @@ public class AdministratorService {
 	 * @param password    パスワード
 	 * @return 管理者情報 存在しない場合はnullが返ります
 	 */
-	public Administrator login(String mailAddress, String password) {
-		Administrator administrator = administratorRepository.findByMailAddressAndPassward(mailAddress, password);
+	public Administrator login(String mailAddress) {
+		Administrator administrator = administratorRepository.findByMailAddress(mailAddress);
 		return administrator;
 	}
 }
