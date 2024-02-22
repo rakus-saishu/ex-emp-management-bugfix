@@ -31,8 +31,11 @@ import jakarta.servlet.http.HttpSession;
 public class AdministratorController {
 
 	private AdministratorService administratorService;
+
+	//(Sec)PasswordEncoder インタフェース
 	private PasswordEncoder passwordEncoder;
 	
+	// (Sec)コンストラクタにPasswordEncoderを追加
 	public AdministratorController(
 			AdministratorService administratorService
 			, PasswordEncoder passwordEncoder) {

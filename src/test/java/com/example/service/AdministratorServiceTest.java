@@ -21,7 +21,7 @@ public class AdministratorServiceTest {
     public AdministratorServiceTest(AdministratorRepository repository) {
         this.repository = repository;
         // (Sec)PasswordEncoderはnullでOK?
-        this.service = new AdministratorService(repository, null);
+        this.service = new AdministratorService(repository);
     }
 
     //管理者登録テスト
