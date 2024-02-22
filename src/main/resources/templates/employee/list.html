@@ -88,7 +88,15 @@
           <a href="list.html" th:href="@{/employee/showList}">従業員リスト</a>
         </li>
       </ol>
-
+      <!-- 従業員曖昧検索 -->
+      <div class="search-container">
+        <form th:action="@{/employee/searchList}" method="post">
+          <span>
+            従業員名を名前から検索<input type="text" name="name" class="search-form">
+          </span>
+          <button type="submit" class="search-button">検索</button>
+        </form>
+      </div>
       <!-- table -->
       <div class="row">
         <div

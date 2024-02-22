@@ -55,6 +55,21 @@ public class EmployeeController {
 		return "employee/list";
 	}
 
+	/**
+	 * 曖昧検索から従業員一覧画面を出力します.
+	 */
+	@PostMapping("/searchList")
+	public String searchList(String name, Model model){
+		List<Employee> employeeList = employeeService.seachList(name);
+		if(employeeList != null){
+			model.addAttribute("employeeList", employeeList);
+		} else {
+			employeeList = employeeService.showList();
+			model.addAttribute("employeeList", employeeList);
+		}
+		return "employee/list";
+	}
+
 	/////////////////////////////////////////////////////
 	// ユースケース：従業員詳細を表示する
 	/////////////////////////////////////////////////////
