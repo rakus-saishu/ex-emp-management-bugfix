@@ -2,6 +2,7 @@ package com.example.controller;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -29,11 +30,19 @@ import jakarta.servlet.http.HttpSession;
 @RequestMapping("/")
 public class AdministratorController {
 
-	@Autowired
 	private AdministratorService administratorService;
+	private PasswordEncoder passwordEncoder;
+	
+	public AdministratorController(
+			AdministratorService administratorService
+			, PasswordEncoder passwordEncoder) {
+		this.administratorService = administratorService;
+		this.passwordEncoder = passwordEncoder;
+	}
 
 	@Autowired
 	private HttpSession session;
+
 
 	/**
 	 * 使用するフォームオブジェクトをリクエストスコープに格納する.
@@ -89,8 +98,14 @@ public class AdministratorController {
 			Administrator administrator = new Administrator();
 			// フォームからドメインにプロパティ値をコピー
 			BeanUtils.copyProperties(form, administrator);
+
+			String hashedPassword
+				= passwordEncoder.encode(administrator.getPassword());
+			administrator.setPassword(hashedPassword);
+
 			administratorService.insert(administrator);
 			return "redirect:/";
+
 		}else{
 			redirectAttributes.addFlashAttribute("errorMessage", "errorMessage");
 			return "redirect:/toInsert";
@@ -131,15 +146,28 @@ public class AdministratorController {
 		}
 
 		Administrator administrator
-			= administratorService.login(form.getMailAddress(), form.getPassword());
+			= administratorService.login(form.getMailAddress());
 
-		if (administrator == null) {
+		if (administrator != null) {
+
+			String dbPassword = administrator.getPassword();
+
+			if(passwordEncoder.matches(form.getPassword(), dbPassword)){
+				session.setAttribute("administratorName", administrator.getName());
+				return "redirect:/employee/showList";
+			} else {
+				redirectAttributes.addFlashAttribute("errorMessage", "errorMessage");
+				return "redirect:/";
+			}
+			
+		} else {
+			
 			redirectAttributes.addFlashAttribute("errorMessage", "errorMessage");
 			return "redirect:/";
+			
 		}
 		
-		session.setAttribute("administratorName", administrator.getName());
-		return "redirect:/employee/showList";
+		
 	}
 
 	/////////////////////////////////////////////////////
