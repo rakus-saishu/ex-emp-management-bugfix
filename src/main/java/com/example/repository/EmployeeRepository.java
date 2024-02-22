@@ -92,6 +92,38 @@ public class EmployeeRepository {
 	}
 
 	/**
+	 * 従業員名から曖昧検索します.
+	 */
+	public List<Employee> search(String name){
+		String sql =
+		"""
+			SELECT 
+				id
+				,name
+				,image
+				,gender
+				,hire_date
+				,mail_address
+				,zip_code
+				,address
+				,telephone
+				,salary
+				,characteristics
+				,dependents_count
+			FROM employees
+			WHERE name LIKE :name
+			ORDER BY hire_date ASC
+		""";
+
+		SqlParameterSource param 
+			= new MapSqlParameterSource().addValue("name", "%" + name + "%");
+		
+		List<Employee> developmentList = template.query(sql, param, EMPLOYEE_ROW_MAPPER);
+
+		return developmentList;
+	}
+
+	/**
 	 * 従業員情報を変更します.
 	 */
 	public void update(Employee employee) {

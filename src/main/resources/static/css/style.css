@@ -10,3 +10,17 @@
   display: block;
   color: #ff0000;
 }
+
+.search-form {
+  margin-left: 10px;
+}
+
+.search-container {
+  margin-bottom: 10px;
+}
+
+.search-button {
+  color: #fff;
+  background-color: #337ab7;
+  border-color: #2e6da4;
+}
